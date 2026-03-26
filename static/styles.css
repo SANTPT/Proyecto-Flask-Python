@@ -1,0 +1,213 @@
+:root {
+    --bg: #ffffff;
+    --text: #000000;
+    --accent: #E11D48; /* Swiss Red */
+    --gray-light: #f5f5f5;
+    --gray-mid: #e5e5e5;
+    --gray-dark: #717171;
+    --grid-gap: 24px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    padding: 40px;
+    line-height: 1.1; /* Tighter line height for titles */
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+header {
+    margin-bottom: 80px;
+    border-bottom: 2px solid var(--text);
+    padding-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+h1 {
+    font-size: 8rem; /* Large impact */
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: -0.05em;
+    line-height: 0.8;
+    max-width: 600px;
+}
+
+.subtitle {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text);
+    text-transform: uppercase;
+    /* letter-spacing: 0.1em; */
+}
+
+/* Swiss Grid Form */
+.form-card {
+    margin-bottom: 60px;
+}
+
+form {
+    display: grid;
+    grid-template-columns: 2fr 1fr auto;
+    gap: 10px;
+    border-top: 1px solid var(--text);
+    padding-top: 20px;
+}
+
+input {
+    border: 1px solid var(--gray-mid);
+    padding: 15px;
+    font-size: 1.1rem;
+    font-family: inherit;
+    background: white;
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--text);
+}
+
+button {
+    background: var(--text);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+button:hover {
+    background: var(--accent);
+}
+
+/* Movie Grid */
+.movie-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: var(--grid-gap);
+    border-top: 1px solid var(--text);
+    padding-top: 40px;
+}
+
+.movie-card {
+    grid-column: span 4; /* 3 columns in a 12-col grid */
+    border-bottom: 1px solid var(--gray-mid);
+    padding-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    transition: border-color 0.3s;
+}
+
+@media (max-width: 900px) {
+    .movie-card { grid-column: span 6; }
+    h1 { font-size: 5rem; }
+}
+
+@media (max-width: 600px) {
+    .movie-card { grid-column: span 12; }
+    form { grid-template-columns: 1fr; }
+}
+
+.movie-header {
+    margin-bottom: 20px;
+}
+
+.movie-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    line-height: 0.95;
+    margin-bottom: 5px;
+    word-break: break-word;
+}
+
+.movie-genre {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+}
+
+.movie-status {
+    margin-bottom: 15px;
+}
+
+.badge {
+    font-size: 0.7rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    padding: 2px 6px;
+    display: inline-block;
+}
+
+.badge-seen { background: var(--text); color: white; }
+.badge-pending { border: 1px solid var(--text); color: var(--text); }
+
+.rating-area {
+    margin-top: auto;
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.rating-stars {
+    display: flex;
+    gap: 2px;
+}
+
+/* Delete Button as a Swiss corner element */
+.delete-btn {
+    position: absolute;
+    top: -5px;
+    right: 0;
+    text-decoration: none;
+    color: var(--gray-mid);
+    font-weight: 300;
+    font-size: 1.5rem;
+}
+
+.delete-btn:hover {
+    color: var(--accent);
+}
+
+.btn-watch {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    font-weight: 800;
+    text-decoration: none;
+    color: var(--text);
+    border-bottom: 2px solid var(--text);
+    padding-bottom: 2px;
+}
+
+.rating-form {
+    display: flex;
+    gap: 5px;
+}
+
+.rating-form input {
+    width: 50px;
+    padding: 5px;
+    font-size: 0.9rem;
+}
+
+.rating-form button {
+    padding: 5px 10px;
+    font-size: 0.8rem;
+}
