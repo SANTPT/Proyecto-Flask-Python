@@ -1,6 +1,4 @@
-#!/bin/sh
-'''exec' "/home/penascalf5/Documentos/FlaskProjects/Movie Tracker/Proyecto-Flask-Python/.venv/bin/python3" "$0" "$@"
-' '''
+#!/home/penascalf5/Documentos/movies/Proyecto-Flask-Python/.venv/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys
