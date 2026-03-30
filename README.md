@@ -1,16 +1,33 @@
-# Movie Tracker
+# Movie Tracker (Flask Edition)
 
-Aplicación web simple desarrollada con Flask para gestionar una colección personal de películas. Permite añadir películas, marcarlas como vistas, calificarlas y eliminarlas.
+Una aplicación web moderna y minimalista desarrollada con Flask para gestionar y seguir tu colección personal de películas. Este proyecto demuestra una arquitectura limpia separando rutas, servicios y lógica de base de datos.
 
 ## Características
 
-- **Gestión de Películas**: Añadir título y género.
-- **Estado**: Marcar películas como vistas o pendientes.
-- **Calificación**: Asignar una puntuación de 1 a 10.
-- **Eliminación**: Borrar películas de la colección.
-- **Diseño Minimalista**: Interfaz limpia con tema oscuro.
+- **Gestión Completa (CRUD)**:
+  - Añade nuevas películas con título y género.
+  - Elimina películas de tu lista fácilmente.
+- **Seguimiento de Progreso**:
+  - Marca películas como "vistas" con un solo clic.
+- **Sistema de Calificación**:
+  - Asigna puntuaciones del 1 al 10 a las películas que ya has visto.
+- **Interfaz de Usuario**:
+  - Diseño responsivo y oscuro optimizado para una excelente experiencia de visualización.
+  - Basado en plantillas Jinja2 y CSS puro.
 
-## Instalación
+## Tecnologías
+
+- **Backend**: [Flask](https://flask.palletsprojects.com/)
+- **Base de Datos**: SQLite3
+- **Frontend**: HTML5, CSS3, Jinja2
+- **Testing**: Pytest (en desarrollo)
+
+## Requisitos Previos
+
+- Python 3.8+
+- pip (gestor de paquetes de Python)
+
+## Instalación y Configuración
 
 1. **Clonar el repositorio**:
    ```bash
@@ -18,31 +35,58 @@ Aplicación web simple desarrollada con Flask para gestionar una colección pers
    cd Proyecto-Flask-Python
    ```
 
-2. **Crear y activar un entorno virtual**:
+2. **Entorno Virtual**:
    ```bash
+   # Crear el entorno
    python3 -m venv .venv
-   source .venv/bin/activate
+
+   # Activarlo
+   source .venv/bin/activate  # En Linux/macOS
+   # .venv\Scripts\activate     # En Windows
    ```
 
-3. **Instalar dependencias**:
+3. **Dependencias**:
    ```bash
    pip install -r requirements.txt
    ```
 
-## Uso
+4. **Base de Datos (Opcional - La app la usa directamente)**:
+   Si deseas reiniciar la base de datos con datos de prueba:
+   ```bash
+   python seed.py
+   ```
 
-Ejecutar la aplicación:
+## Ejecución
+
+Inicia el servidor de desarrollo:
 ```bash
 python app.py
 ```
 
-Acceder a la aplicación en el navegador en: `http://127.0.0.1:5000`
+La aplicación estará disponible en: [http://127.0.0.1:5000](http://127.0.0.1:5000)
 
 ## Estructura del Proyecto
 
-- `app.py`: Lógica principal de la aplicación Flask.
-- `database.py`: Módulo para la gestión de la base de datos SQLite.
-- `templates/`: Plantillas Jinja2 para la interfaz de usuario.
-- `static/`: Archivos estáticos (CSS).
-- `requirements.txt`: Dependencias del proyecto.
-- `README.md`: Este archivo.
+```text
+├── app.py                # Punto de entrada de la aplicación
+├── routes/               # Definición de Blueprints y rutas
+│   └── peliculas.py      # Rutas relacionadas con películas
+├── services/             # Lógica de negocio e interacción DB
+│   └── peliculas_service.py
+├── templates/            # Plantillas HTML (Jinja2)
+├── static/               # Archivos estáticos (CSS/JS)
+├── tests/                # Pruebas automatizadas
+├── schema.sql            # Definición de la estructura de la DB
+├── seed.py               # Script para poblar la DB con datos iniciales
+└── requirements.txt      # Dependencias del proyecto
+```
+
+## Pruebas
+
+Para ejecutar la suite de pruebas (actualmente en desarrollo):
+```bash
+pytest
+```
+
+---
+*Desarrollado como proyecto de aprendizaje para Flask y Python.*
