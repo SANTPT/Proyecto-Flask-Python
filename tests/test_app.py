@@ -63,7 +63,7 @@ def test_rate_movie(client):
     conn = get_db_connection(TEST_DB)
     res = conn.execute("SELECT id FROM peliculas LIMIT 1").fetchone()
     movie_id = res['id']
-    conn.close()1
+    conn.close()
     
     response = client.post(f'/rate/{movie_id}', data={
         'puntuacion': '8'
