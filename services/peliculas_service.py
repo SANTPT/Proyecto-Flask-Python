@@ -1,10 +1,4 @@
-import sqlite3
-
-
-def get_db_connection():
-    conn = sqlite3.connect('database.db')
-    conn.row_factory = sqlite3.Row
-    return conn
+from database import get_db_connection
 
 
 def obtener_peliculas():
@@ -43,9 +37,13 @@ def marcar_como_vista(id):
 
 def calificar_pelicula(id, puntuacion):
     conn = get_db_connection()
+    try:
+        puntuacion_int = int(puntuacion)
+    except (ValueError, TypeError):
+        puntuacion_int = 0
     conn.execute(
         'UPDATE peliculas SET puntuacion = ? WHERE id = ?',
-        (puntuacion, id)
+        (puntuacion_int, id)
     )
     conn.commit()
     conn.close()
