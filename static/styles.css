@@ -1,7 +1,7 @@
 :root {
     --bg: #ffffff;
     --text: #000000;
-    --accent: #E11D48; /* Swiss Red */
+    --accent: #E11D48;
     --gray-light: #f5f5f5;
     --gray-mid: #e5e5e5;
     --gray-dark: #717171;
@@ -19,7 +19,7 @@ body {
     background-color: var(--bg);
     color: var(--text);
     padding: 40px;
-    line-height: 1.1; /* Tighter line height for titles */
+    line-height: 1.1;
 }
 
 .container {
@@ -37,7 +37,7 @@ header {
 }
 
 h1 {
-    font-size: 8rem; /* Large impact */
+    font-size: 8rem;
     font-weight: 900;
     text-transform: uppercase;
     letter-spacing: -0.05em;
@@ -50,20 +50,41 @@ h1 {
     font-weight: 600;
     color: var(--text);
     text-transform: uppercase;
-    /* letter-spacing: 0.1em; */
 }
 
-/* Swiss Grid Form */
 .form-card {
     margin-bottom: 60px;
 }
 
-form {
-    display: grid;
-    grid-template-columns: 2fr 1fr auto;
-    gap: 10px;
-    border-top: 1px solid var(--text);
-    padding-top: 20px;
+.delete-form {
+    position: absolute;
+    top: 6px;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    border: none;
+    display: block;
+}
+
+.delete-btn {
+    background: transparent;
+    color: var(--gray-dark);
+    border: none;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    font-size: 1.1rem;
+    line-height: 1;
+    font-weight: 400;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.delete-btn:hover {
+    background: transparent;
+    color: var(--accent);
 }
 
 input {
@@ -95,7 +116,6 @@ button:hover {
     background: var(--accent);
 }
 
-/* Movie Grid */
 .movie-grid {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
@@ -105,7 +125,7 @@ button:hover {
 }
 
 .movie-card {
-    grid-column: span 4; /* 3 columns in a 12-col grid */
+    grid-column: span 4;
     border-bottom: 1px solid var(--gray-mid);
     padding-bottom: 20px;
     display: flex;
@@ -116,13 +136,23 @@ button:hover {
 }
 
 @media (max-width: 900px) {
-    .movie-card { grid-column: span 6; }
-    h1 { font-size: 5rem; }
+    .movie-card {
+        grid-column: span 6;
+    }
+
+    h1 {
+        font-size: 5rem;
+    }
 }
 
 @media (max-width: 600px) {
-    .movie-card { grid-column: span 12; }
-    form { grid-template-columns: 1fr; }
+    .movie-card {
+        grid-column: span 12;
+    }
+
+    form {
+        grid-template-columns: 1fr;
+    }
 }
 
 .movie-header {
@@ -157,8 +187,15 @@ button:hover {
     display: inline-block;
 }
 
-.badge-seen { background: var(--text); color: white; }
-.badge-pending { border: 1px solid var(--text); color: var(--text); }
+.badge-seen {
+    background: var(--text);
+    color: white;
+}
+
+.badge-pending {
+    border: 1px solid var(--text);
+    color: var(--text);
+}
 
 .rating-area {
     margin-top: auto;
@@ -169,21 +206,6 @@ button:hover {
 .rating-stars {
     display: flex;
     gap: 2px;
-}
-
-/* Delete Button as a Swiss corner element */
-.delete-btn {
-    position: absolute;
-    top: -5px;
-    right: 0;
-    text-decoration: none;
-    color: var(--gray-mid);
-    font-weight: 300;
-    font-size: 1.5rem;
-}
-
-.delete-btn:hover {
-    color: var(--accent);
 }
 
 .btn-watch {

@@ -8,55 +8,57 @@
             <h1>MOVIE<br>TRACKER</h1>
             <p class="subtitle">&mdash; Your Personal Cinema Log</p>
         </div>
-        <div style="font-size: 0.8rem; font-weight: 900; letter-spacing: 0.1em; color: var(--accent); max-width: 15ch; text-align: right;">
+        <div
+            style="font-size: 0.8rem; font-weight: 900; letter-spacing: 0.1em; color: var(--accent); max-width: 15ch; text-align: right;">
             COLLECTION / [{{ "%02d"|format(peliculas|length) }}]
         </div>
     </header>
 
     <div class="form-card">
-        <form action="/add" method="post" style="display: grid; grid-template-columns: 1fr 1fr auto; gap: 10px;">
-            <input type="text" name="titulo" placeholder="MOVIE TITLE" required style="text-transform: uppercase; font-weight: 800;">
-            <input type="text" name="genero" placeholder="GENRE" style="text-transform: uppercase;">
-            <button type="submit">ADD NEW</button>
+        <form action="/delete/{{ peli['id'] }}" method="post" class="delete-form">
+            <button type="submit" class="delete-btn" title="Remove">&times;</button>
         </form>
     </div>
 
     <div class="movie-grid">
         {% for peli in peliculas %}
-            <div class="movie-card">
-                <a href="/delete/{{ peli['id'] }}" class="delete-btn" title="Remove">&times;</a>
-                
-                <div class="movie-header">
-                    <p style="font-size: 0.7rem; font-weight: 900; color: var(--gray-dark);">&mdash; {{ "%02d"|format(loop.index) }}</p>
-                    <div class="movie-title">{{ peli['titulo']|upper }}</div>
-                    {% if peli['genero'] %}
-                    <span class="movie-genre">{{ peli['genero']|upper }}</span>
-                    {% endif %}
-                </div>
+        <div class="movie-card">
+            <form action="/delete/{{ peli['id'] }}" method="post" class="delete-form"">
+                <button type=" submit" class="delete-btn" title="Remove">&times;</button>
+            </form>
 
-                <div class="movie-status">
-                    {% if peli['vista'] == 0 %}
-                        <span class="badge badge-pending">PENDING</span>
-                        <a href="/watch/{{ peli['id'] }}" class="btn-watch">MARK VIEWED</a>
-                    {% else %}
-                        <span class="badge badge-seen">VIEWED</span>
-                    {% endif %}
-                </div>
-
-                <div class="rating-area">
-                    {% if peli['puntuacion'] %}
-                        <div style="display: flex; align-items: baseline; gap: 5px;">
-                            <span style="font-size: 3rem; font-weight: 900;">{{ peli['puntuacion'] }}</span>
-                            <span style="font-size: 0.8rem; font-weight: 900; color: var(--accent);">/10</span>
-                        </div>
-                    {% else %}
-                        <form action="/rate/{{ peli['id'] }}" method="post" class="rating-form">
-                            <input type="number" name="puntuacion" min="1" max="10" placeholder="0" required>
-                            <button type="submit" style="padding: 5px 10px;">RATE</button>
-                        </form>
-                    {% endif %}
-                </div>
+            <div class="movie-header">
+                <p style="font-size: 0.7rem; font-weight: 900; color: var(--gray-dark);">&mdash; {{
+                    "%02d"|format(loop.index) }}</p>
+                <div class="movie-title">{{ peli['titulo']|upper }}</div>
+                {% if peli['genero'] %}
+                <span class="movie-genre">{{ peli['genero']|upper }}</span>
+                {% endif %}
             </div>
+
+            <div class="movie-status">
+                {% if peli['vista'] == 0 %}
+                <span class="badge badge-pending">PENDING</span>
+                <a href="/watch/{{ peli['id'] }}" class="btn-watch">MARK VIEWED</a>
+                {% else %}
+                <span class="badge badge-seen">VIEWED</span>
+                {% endif %}
+            </div>
+
+            <div class="rating-area">
+                {% if peli['puntuacion'] %}
+                <div style="display: flex; align-items: baseline; gap: 5px;">
+                    <span style="font-size: 3rem; font-weight: 900;">{{ peli['puntuacion'] }}</span>
+                    <span style="font-size: 0.8rem; font-weight: 900; color: var(--accent);">/10</span>
+                </div>
+                {% else %}
+                <form action="/rate/{{ peli['id'] }}" method="post" class="rating-form">
+                    <input type="number" name="puntuacion" min="1" max="10" placeholder="0" required>
+                    <button type="submit" style="padding: 5px 10px;">RATE</button>
+                </form>
+                {% endif %}
+            </div>
+        </div>
         {% endfor %}
     </div>
 </div>
