@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect
+from flask import Blueprint, render_template, request, redirect, url_for
 from services.peliculas_service import (
     obtener_peliculas,
     agregar_pelicula,
@@ -22,19 +22,19 @@ def add():
     genero = request.form['genero']
 
     agregar_pelicula(titulo, genero)
-    return redirect('/')
+    return redirect(url_for('peliculas.index'))
 
 
-@peliculas_bp.route('/delete/<int:id>')
+@peliculas_bp.route('/delete/<int:id>', methods=['POST'])
 def delete(id):
     eliminar_pelicula(id)
-    return redirect('/')
+    return redirect(url_for('peliculas.index'))
 
 
 @peliculas_bp.route('/watch/<int:id>')
 def watch(id):
     marcar_como_vista(id)
-    return redirect('/')
+    return redirect(url_for('peliculas.index'))
 
 
 @peliculas_bp.route('/rate/<int:id>', methods=['POST'])
@@ -42,4 +42,4 @@ def rate(id):
     puntuacion = request.form['puntuacion']
 
     calificar_pelicula(id, puntuacion)
-    return redirect('/')
+    return redirect(url_for('peliculas.index'))

@@ -27,6 +27,6 @@ if __name__ == '__main__':
     app = create_app(init_database=True)
 
     # Cargar seed automáticamente al arrancar
-    seed_data(force=True)
+    seed_data()
 
     app.run(debug=True, port=port)
