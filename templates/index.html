@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <header>
+        <div>
+            <h1>{{ app_name|upper|replace(' ', '<br>')|safe }}</h1>
+            <p class="subtitle">&mdash; Your Personal Cinema Log</p>
+        </div>
+        <div class="collection-counter">
+            COLLECTION / [{{ "%02d"|format(peliculas|length) }}]
+        </div>
+    </header>
+
+    <div class="form-card">
+        <form action="{{ url_for('peliculas.add') }}" method="post" class="add-form">
+            <div class="form-field">
+                <label for="titulo">Título</label>
+                <input type="text" id="titulo" name="titulo" required>
+            </div>
+
+            <div class="form-field">
+                <label for="genero">Género</label>
+                <input type="text" id="genero" name="genero" required>
+            </div>
+
+            <button type="submit" class="btn-add">Add movie</button>
+        </form>
+    </div>
+
+    <div class="movie-grid">
+        {% for peli in peliculas %}
+        <div class="movie-card">
+            <form action="{{ url_for('peliculas.delete', id=peli['id']) }}" method="post" class="delete-form">
+                <button
+                    type="submit"
+                    class="delete-btn"
+                    title="Remove"
+                    onclick="return confirm('¿Eliminar esta película?');">
+                    &times;
+                </button>
+            </form>
+
+            <div class="movie-header">
+                <p class="movie-index">&mdash; {{ "%02d"|format(loop.index) }}</p>
+                <div class="movie-title">{{ peli['titulo']|upper }}</div>
+                {% if peli['genero'] %}
+                <span class="movie-genre">{{ peli['genero']|upper }}</span>
+                {% endif %}
+            </div>
+
+            <div class="movie-status">
+                <span class="badge {% if peli['vista'] %}badge-seen{% else %}badge-pending{% endif %}">
+                    {{ peli['vista']|movie_status }}
+                </span>
+
+                {% if not peli['vista'] %}
+                <form action="{{ url_for('peliculas.watch', id=peli['id']) }}" method="post" class="watch-form">
+                    <button type="submit" class="btn-watch">Mark viewed</button>
+                </form>
+                {% endif %}
+            </div>
+
+            <div class="rating-area">
+                {% if peli['puntuacion'] is rated %}
+                <div class="rating-value">
+                    <span class="rating-number">{{ peli['puntuacion'] }}</span>
+                    <span class="rating-max">/10</span>
+                </div>
+                <div class="rating-label">
+                    {{ rating_badge(peli['puntuacion']) }}
+                </div>
+                {% else %}
+                <form action="{{ url_for('peliculas.rate', id=peli['id']) }}" method="post" class="rating-form">
+                    <input type="number" name="puntuacion" min="1" max="10" placeholder="0" required>
+                    <button type="submit" class="btn-rate">Rate</button>
+                </form>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <footer class="page-footer">
+        <small>&copy; {{ current_year }} - {{ app_name }}</small>
+    </footer>
+</div>
+{% endblock %}

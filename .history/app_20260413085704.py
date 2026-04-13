@@ -21,11 +21,11 @@ def create_app(init_database=False, test_config=None):
         APP_NAME="Movie Tracker",
     )
 
-
+<<<<<<< HEAD
 if __name__ == '__main__':
     app.run(debug=True)
 
-
+=======
     if test_config:
         app.config.update(test_config)
 
@@ -131,4 +131,4 @@ if __name__ == "__main__":
     app = create_app(init_database=True, test_config={"FORCE_INIT_DB": False})
     seed_data()
     app.run(debug=True, port=port)
-
+>>>>>>> 87c65063dc0e57a05fa79a3f6a53374fcbe7a2d0
