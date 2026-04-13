@@ -1,4 +1,4 @@
-from flask import jsonify, request
+from flask import jsonify, request, render_template
 import datetime
 
 def init_decorators(app):
@@ -12,11 +12,19 @@ def init_decorators(app):
 
     @app.errorhandler(404)
     def resource_not_found_error(e):
-        return jsonify({"error": "La ruta o película solicitada no fue encontrada."}), 404
+        # Si la petición acepta JSON por encima de HTML (es una llamada API/Fetch)
+        if request.accept_mimetypes.accept_json and not request.accept_mimetypes.accept_html:
+            return jsonify({"error": "La ruta o película solicitada no fue encontrada."}), 404
+        
+        # Si es un usuario navegando de forma convencional
+        return render_template('404.html'), 404
 
     @app.errorhandler(500)
     def internal_server_error(e):
-        return jsonify({"error": "Error interno del servidor."}), 500
+        if request.accept_mimetypes.accept_json and not request.accept_mimetypes.accept_html:
+            return jsonify({"error": "Error interno del servidor."}), 500
+            
+        return render_template('500.html'), 500
 
 
     # --- 2. CALLBACKS DE PETICIÓN (BEFORE/AFTER REQUEST) ---

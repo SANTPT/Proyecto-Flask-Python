@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>500 - Server Error</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/styles.css">
+    <style>
+        .error-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 70vh;
+            text-align: center;
+        }
+        .error-code {
+            font-size: 8rem;
+            font-weight: 900;
+            color: #ff4a4a; /* Un color más rojo para errores críticos */
+            line-height: 1;
+            margin-bottom: 0px;
+        }
+    </style>
+</head>
+<body style="margin: 0; padding: 0;">
+
+<div class="container">
+    <header style="border-bottom: none;">
+        <div>
+            <h1>{{ nombre_app | mayusculas }}</h1>
+        </div>
+    </header>
+
+    <div class="error-wrapper">
+        <h1 class="error-code">500</h1>
+        <h2 style="font-size: 2rem; color: var(--foreground); margin-top: 10px;">Corte de Proyector</h2>
+        <p class="subtitle" style="margin-bottom: 40px; font-size: 1.1rem;">
+            Nuestros sistemas técnicos han fallado. Estamos intentando arreglar la cinta.
+            <br>Por favor, inténtalo de nuevo más tarde.
+        </p>
+        
+        <a href="/" style="text-decoration: none;">
+            <button style="padding: 15px 30px; font-size: 1rem; cursor: pointer;">
+                INTENTAR DE NUEVO
+            </button>
+        </a>
+    </div>
+
+    <div style="text-align: center; margin-top: 40px; padding-bottom: 20px; font-size: 0.8rem; color: var(--gray-dark); font-weight: 500;">
+        &copy; {{ anio_actual }} - {{ nombre_app }}. Todos los derechos reservados.
+    </div>
+</div>
+
+</body>
+</html>

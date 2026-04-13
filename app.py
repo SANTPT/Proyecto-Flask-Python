@@ -4,8 +4,15 @@ from routes.peliculas import init_routes
 from database import init_db
 from seed import seed_data
 from utils.decorators import init_decorators
+from flask import Flask, abort
 
 app = Flask(__name__)
+
+# Ruta temporal para probar nuestro Error 500
+@app.route('/forzar-error')
+def generar_error():
+    abort(500)  # Esto engaña al sistema haciéndole creer que todo explotó
+
 
 # Registramos las rutas y decoradores
 init_routes(app)
