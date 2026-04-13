@@ -1,15 +1,9 @@
-
-
-from flask import Flask
-
 import os
 import time
 from datetime import datetime
 
 from flask import Flask, g, render_template, request
-
 from database import init_db
-
 from routes.peliculas import peliculas_bp
 from seed import seed_data
 
@@ -20,11 +14,6 @@ def create_app(init_database=False, test_config=None):
         SECRET_KEY=os.environ.get("SECRET_KEY", "dev"),
         APP_NAME="Movie Tracker",
     )
-
-
-if __name__ == '__main__':
-    app.run(debug=True)
-
 
     if test_config:
         app.config.update(test_config)
@@ -131,4 +120,3 @@ if __name__ == "__main__":
     app = create_app(init_database=True, test_config={"FORCE_INIT_DB": False})
     seed_data()
     app.run(debug=True, port=port)
-

@@ -5,17 +5,14 @@ def obtener_peliculas():
     conn = get_db_connection()
     peliculas = conn.execute("SELECT * FROM peliculas ORDER BY id DESC").fetchall()
     conn.close()
-    return peliculas
+    return [dict(ix) for ix in peliculas]
 
 
 def obtener_pelicula_por_id(id):
     conn = get_db_connection()
-    pelicula = conn.execute(
-        "SELECT * FROM peliculas WHERE id = ?",
-        (id,),
-    ).fetchone()
+    pelicula = conn.execute('SELECT * FROM peliculas WHERE id = ?', (id,)).fetchone()
     conn.close()
-    return pelicula
+    return dict(pelicula) if pelicula else None
 
 
 def agregar_pelicula(titulo, genero):
