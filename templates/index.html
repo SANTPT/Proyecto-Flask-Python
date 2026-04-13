@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body style="margin: 0; padding: 0;">
 
@@ -17,30 +17,27 @@
             <h1>MOVIE<br>TRACKER</h1>
             <p class="subtitle">&mdash; Your Personal Cinema Log</p>
         </div>
-        <div
+        <div id="stats" 
             style="font-size: 0.8rem; font-weight: 900; letter-spacing: 0.1em; color: var(--accent); max-width: 15ch; text-align: right;">
             COLLECTION / [{{ "%02d"|format(peliculas|length) }}]
         </div>
     </header>
 
     <div class="form-card">
-        <form action="{{ url_for('peliculas.add') }}" method="post">
-            <input type="text" name="titulo" placeholder="MOVIE TITLE" required>
-            <input type="text" name="genero" placeholder="GENRE">
+        <form id="add-movie-form">
+            <input type="text" id="add-titulo" placeholder="MOVIE TITLE" required>
+            <input type="text" id="add-genero" placeholder="GENRE">
             <button type="submit">ADD NEW MOVIE</button>
         </form>
     </div>
 
     <div class="movie-grid">
         {% for peli in peliculas %}
-        <div class="movie-card">
-            <form action="{{ url_for('peliculas.delete', id=peli['id']) }}" method="post" class="delete-form">
-                <button type="submit" class="delete-btn" title="Remove">&times;</button>
-            </form>
+        <div class="movie-card" id="movie-{{ peli['id'] }}">
+            <button onclick="deleteMovie({{ peli['id'] }})" class="delete-btn" title="Remove" style="position: absolute; top: 6px; right: 0;">&times;</button>
 
             <div class="movie-header">
-                <p style="font-size: 0.7rem; font-weight: 900; color: var(--gray-dark);">&mdash; {{
-                    "%02d"|format(loop.index) }}</p>
+                <p style="font-size: 0.7rem; font-weight: 900; color: var(--gray-dark);">&mdash; {{ "%02d"|format(loop.index) }}</p>
                 <div class="movie-title">{{ peli['titulo']|upper }}</div>
                 {% if peli['genero'] %}
                 <span class="movie-genre">{{ peli['genero']|upper }}</span>
@@ -50,7 +47,7 @@
             <div class="movie-status">
                 {% if peli['vista'] == 0 %}
                 <span class="badge badge-pending">PENDING</span>
-                <a href="{{ url_for('peliculas.watch', id=peli['id']) }}" class="btn-watch">MARK VIEWED</a>
+                <button onclick="watchMovie({{ peli['id'] }})" class="btn-watch" style="background: none; cursor: pointer;">MARK VIEWED</button>
                 {% else %}
                 <span class="badge badge-seen">VIEWED</span>
                 {% endif %}
@@ -63,16 +60,57 @@
                     <span style="font-size: 0.8rem; font-weight: 900; color: var(--accent);">/10</span>
                 </div>
                 {% else %}
-                <form action="{{ url_for('peliculas.rate', id=peli['id']) }}" method="post" class="rating-form">
-                    <input type="number" name="puntuacion" min="1" max="10" placeholder="0" required>
-                    <button type="submit" style="padding: 5px 10px;">RATE</button>
-                </form>
+                <div class="rating-form">
+                    <input type="number" id="rating-{{ peli['id'] }}" min="1" max="10" placeholder="0">
+                    <button onclick="rateMovie({{ peli['id'] }})" style="padding: 5px 10px;">RATE</button>
+                </div>
                 {% endif %}
             </div>
         </div>
         {% endfor %}
     </div>
 </div>
+
+<script>
+async function deleteMovie(id) {
+    if (!confirm('Are you sure?')) return;
+    const res = await fetch(`/peliculas/${id}`, { method: 'DELETE' });
+    if (res.ok) location.reload();
+}
+
+async function watchMovie(id) {
+    const res = await fetch(`/peliculas/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ vista: 1 })
+    });
+    if (res.ok) location.reload();
+}
+
+async function rateMovie(id) {
+    const score = document.getElementById(`rating-${id}`).value;
+    if (!score) return;
+    const res = await fetch(`/peliculas/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ puntuacion: score })
+    });
+    if (res.ok) location.reload();
+}
+
+document.getElementById('add-movie-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const titulo = document.getElementById('add-titulo').value;
+    const genero = document.getElementById('add-genero').value;
+    
+    const res = await fetch('/peliculas', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ titulo, genero })
+    });
+    if (res.ok) location.reload();
+});
+</script>
 
 </body>
 </html>
