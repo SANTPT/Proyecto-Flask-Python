@@ -14,7 +14,7 @@
 <div class="container">
     <header>
         <div>
-            <h1>MOVIE<br>TRACKER</h1>
+            <h1>{{ nombre_app | mayusculas }}</h1>
             <p class="subtitle">&mdash; Your Personal Cinema Log</p>
         </div>
         <div id="stats" 
@@ -38,9 +38,9 @@
 
             <div class="movie-header">
                 <p style="font-size: 0.7rem; font-weight: 900; color: var(--gray-dark);">&mdash; {{ "%02d"|format(loop.index) }}</p>
-                <div class="movie-title">{{ peli['titulo']|upper }}</div>
+                <div class="movie-title">{{ peli['titulo']|mayusculas }}</div>
                 {% if peli['genero'] %}
-                <span class="movie-genre">{{ peli['genero']|upper }}</span>
+                <span class="movie-genre">{{ peli['genero']|mayusculas }}</span>
                 {% endif %}
             </div>
 
@@ -69,6 +69,10 @@
         </div>
         {% endfor %}
     </div>
+</div>
+
+<div style="text-align: center; margin-top: 40px; padding-bottom: 20px; font-size: 0.8rem; color: var(--gray-dark); font-weight: 500;">
+    &copy; {{ anio_actual }} - {{ nombre_app }}. Todos los derechos reservados.
 </div>
 
 <script>
