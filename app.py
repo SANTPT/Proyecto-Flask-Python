@@ -1,32 +1,18 @@
 import os
 from flask import Flask
-from routes.peliculas import peliculas_bp
+from routes.peliculas import init_routes
 from database import init_db
 from seed import seed_data
 
+app = Flask(__name__)
 
-def create_app(init_database=False):
-    app = Flask(__name__)
-
-    app.register_blueprint(peliculas_bp)
-
-    if init_database:
-        init_db()
-
-    return app
-
-
-# App para imports (tests, WSGI, etc.) sin efectos secundarios
-app = create_app()
-
+# Registramos las rutas directamente en la app sin Blueprints
+init_routes(app)
 
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5000))
-
-    # Inicialización controlada solo al ejecutar la app directamente
-    app = create_app(init_database=True)
-
-    # Cargar seed automáticamente al arrancar
+    # Inicialización de la base de datos
+    init_db()
     seed_data()
-
+    
+    port = int(os.environ.get('PORT', 5000))
     app.run(debug=True, port=port)
