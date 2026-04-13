@@ -1,3 +1,4 @@
+
 from flask import Flask
 from routes.peliculas import peliculas_bp
 
@@ -7,3 +8,4 @@ app.register_blueprint(peliculas_bp)
 
 if __name__ == '__main__':
     app.run(debug=True)
+
